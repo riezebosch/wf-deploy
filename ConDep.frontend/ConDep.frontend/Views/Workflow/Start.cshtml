@@ -2,3 +2,17 @@
     ViewBag.Title = "Start";
 }
 <h2>@ViewBag.Title.</h2>
+
+@if(ViewData.ModelState.IsValid)
+{
+    <h3>Proces succesvol uitgevoerd!</h3>
+}
+else
+{
+    <ul>
+        @foreach(var error in ViewData.ModelState)
+        {
+            <li>@error.Value</li>
+        }
+    </ul>
+}

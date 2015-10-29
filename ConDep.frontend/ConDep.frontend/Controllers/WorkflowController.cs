@@ -28,9 +28,16 @@ namespace ConDep.frontend.Controllers
 
         public ActionResult Start(string name)
         {
-            WorkflowManager.StartWorkflow(name);
+            try
+            {
+                WorkflowManager.StartWorkflow(name);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("error", ex);
+            }
 
-            return View();
+            return View(ModelState);
         }
     }
 }
