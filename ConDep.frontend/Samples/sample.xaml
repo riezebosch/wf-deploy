@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="XAMLExamples.Activity1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="XAMLExamples.Activity1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
@@ -6,6 +6,11 @@
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="textToPrint" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>XAMLExamples.Activity1_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System</x:String>
@@ -32,12 +37,11 @@
       <AssemblyReference>XAMLExamples</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <WriteLine Text="HelloWorld!" sap2010:WorkflowViewState.IdRef="WriteLine_1" sads:DebugSymbol.Symbol="d0lDOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERlc2t0b3BcdGVzdFxYQU1MRXhhbXBsZXNcWEFNTEV4YW1wbGVzXHNhbXBsZS54YW1sAiMDI4QBAgEBIxMjIAIBAg==" />
-  <sap2010:WorkflowViewState.IdRef>XAMLExamples.Activity1_1</sap2010:WorkflowViewState.IdRef>
+  <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="HelloWorld!" sads:DebugSymbol.Symbol="d1dDOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERlc2t0b3BcZmluYWxzb2x1dGlvblxjb25kZXBcQ29uRGVwLmZyb250ZW5kXFNhbXBsZXNcc2FtcGxlLnhhbWwCKAMohAECAQEoQShOAgEC" />
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="211,62" />
-      <sap2010:ViewStateData Id="XAMLExamples.Activity1_1" sap:VirtualizedContainerService.HintSize="251,142" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="211,61" />
+      <sap2010:ViewStateData Id="XAMLExamples.Activity1_1" sap:VirtualizedContainerService.HintSize="251,141" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
