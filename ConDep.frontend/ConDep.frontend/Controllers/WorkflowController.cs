@@ -26,11 +26,11 @@ namespace ConDep.frontend.Controllers
 
         #endregion
 
-        public ActionResult Start(string name)
+        public ActionResult Start()
         {
             try
             {
-                WorkflowManager.StartWorkflow(name);
+                WorkflowManager.StartWorkflow("sample");
             }
             catch(Exception ex)
             {
