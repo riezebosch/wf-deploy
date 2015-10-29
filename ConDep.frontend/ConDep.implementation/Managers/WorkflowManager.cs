@@ -10,6 +10,10 @@ namespace ConDep.implementation.Managers
     {
         public void StartWorkflow(string name)
         {
+            // - Load Xaml file?
+            // - Compile Xaml file
+            // - Start host
+
             throw new NotImplementedException();
         }
     }
