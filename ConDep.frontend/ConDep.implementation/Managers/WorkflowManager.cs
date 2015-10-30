@@ -17,6 +17,12 @@ namespace ConDep.implementation.Managers
     {
         public IList<TrackingRecord> StartWorkflow(int id)
         {
+            Dictionary<string, object> wfParams = new Dictionary<string, object>();
+            return this.StartWorkflow(id, wfParams);
+        }
+            
+        public IList<TrackingRecord> StartWorkflow(int id, Dictionary<string, object> wfParams)
+        {
             string fileLocation = null;
             int workflowRunId = 0;
             using (var context = new WorkflowContext())
@@ -37,8 +43,6 @@ namespace ConDep.implementation.Managers
             var tracker = new CustomTrackingParticipant();
             var wf = ActivityXamlServices.Load(new StringReader(xamlData));
 
-            Dictionary<string, object> wfParams = new Dictionary<string, object>();
-
             AutoResetEvent syncEvent = new AutoResetEvent(false);
             WorkflowApplication wfApp = new WorkflowApplication(wf);
             wfApp.Extensions.Add(tracker);
@@ -50,10 +54,17 @@ namespace ConDep.implementation.Managers
             wfApp.Run();
             syncEvent.WaitOne();
 
-            //using (WorkflowContext context = new WorkflowContext())
-            //{
-            //    context.Tracks.Add();
-            //}
+            var tracks = MapTracks(tracker.Records, (t) =>
+            {
+                t.WorkflowRunId = workflowRunId;
+                return t;
+            });
+
+            using (WorkflowContext context = new WorkflowContext())
+            {
+                context.Tracks.AddRange(tracks);
+                context.SaveChanges();
+            }
             return tracker.Records;
         }
 
@@ -76,6 +87,24 @@ namespace ConDep.implementation.Managers
             }
 
             return argumentList;
+        }
+        private IEnumerable<Track> MapTracks(IList<TrackingRecord> trackingRecords, Func<Track, Track> afterMap)
+        {
+            var tracks = new List<Track>();
+
+            foreach(var trackingRecord in trackingRecords.Where(c => c.GetType() == typeof(ActivityStateRecord)))
+            {
+                var record = trackingRecord as ActivityStateRecord;
+                var track = new Track()
+                {
+                    State = record.State,
+                    ActivityName = record.Activity.Name,
+                    EventTime = record.EventTime
+                };
+                track = afterMap(track);
+                tracks.Add(track);
+            }
+            return tracks;
         }
 
         private string ReadXamlFile(string fileLocation)
@@ -102,6 +131,14 @@ namespace ConDep.implementation.Managers
             using(var context = new WorkflowContext())
             {
                 return context.Workflows.ToList();
+            }
+        }
+
+        public IEnumerable<WorkflowRun> Recieveruns(int id)
+        {
+            using (var context = new WorkflowContext())
+            {
+                return context.WorkflowRuns.Where(c => c.WorkflowId == id).ToList();
             }
         }
 

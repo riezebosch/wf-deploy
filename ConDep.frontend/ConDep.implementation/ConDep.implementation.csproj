@@ -53,7 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTrackingParticipant.cs" />
+    <Compile Include="Managers\ITrackManager.cs" />
     <Compile Include="Managers\IWorkflowManager.cs" />
+    <Compile Include="Managers\TrackManager.cs" />
     <Compile Include="Managers\WorkflowManager.cs" />
     <Compile Include="Model\TraceRecord.cs" />
     <Compile Include="Persistence\Track.cs" />

@@ -22,6 +22,9 @@
             @item.Filename
         </td>
         <td>
+            @Html.ActionLink("History", "History", new { Id = item.Id })
+        </td>
+        <td>
             @Html.ActionLink("Start", "Start", new { Id = item.Id })
         </td>
     </tr>

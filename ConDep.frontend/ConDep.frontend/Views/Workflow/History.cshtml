@@ -1,0 +1,26 @@
+﻿@model ConDep.frontend.Models.HistoryModel
+
+<h2>History</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.WorkflowRuns)
+    {
+        <tr>
+            <td>
+                Run @item.WorkflowRunId
+            </td>
+            <td>
+                @item.RunTime
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "WorkflowRun", new { Id = item.WorkflowRunId }, null)
+            </td>
+        </tr>
+    }
+
+</table>

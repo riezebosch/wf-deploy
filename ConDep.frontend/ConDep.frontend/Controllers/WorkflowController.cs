@@ -49,9 +49,17 @@ namespace ConDep.frontend.Controllers
             {
                 wfParams.Add(item, paramToStart[item]);
             }
-            WorkflowManager.StartWorkflow();
 
-            return View();
+            try
+            {
+                var records = WorkflowManager.StartWorkflow(id, wfParams);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("error", ex);
+            }
+
+            return View(ModelState);
         }
 
         //public ActionResult Start(int id)
@@ -65,8 +73,8 @@ namespace ConDep.frontend.Controllers
         //        ModelState.AddModelError("error", ex);
         //    }
 
-        //    return View(ModelState);
-        //}
+            //    return View(ModelState);
+            //}
 
         public ActionResult Overview()
         {
@@ -109,6 +117,25 @@ namespace ConDep.frontend.Controllers
             }
 
             return RedirectToAction("Overview", "Workflow");
+        }
+
+        public ActionResult History(int id)
+        {
+            var workflowRuns = WorkflowManager.Recieveruns(id);
+            HistoryModel model = new HistoryModel()
+            {
+                WorkflowRuns = new List<WorkflowRunViewModel>()
+            };
+            foreach (var workflowRun in workflowRuns)
+            {
+                model.WorkflowRuns.Add(new WorkflowRunViewModel()
+                {
+                    WorkflowId = workflowRun.WorkflowId,
+                    WorkflowRunId = workflowRun.WorkflowRunId,
+                    RunTime = workflowRun.StartTime
+                });
+            }
+            return View(model);
         }
     }
 }
