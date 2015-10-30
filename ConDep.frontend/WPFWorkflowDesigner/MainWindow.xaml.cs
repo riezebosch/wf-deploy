@@ -20,6 +20,8 @@ using System.Activities.Presentation.Toolbox;
 using System.Activities.Statements;
 using System.ComponentModel;
 using Microsoft.Win32;
+using System.Activities.Presentation.View;
+using ConDep.activities;
 
 namespace WPFWorkflowDesigner
 {
@@ -65,7 +67,7 @@ namespace WPFWorkflowDesigner
 
             // Create a category.
             ToolboxCategory category = new ToolboxCategory("Available");
-
+            ToolboxCategory category2 = new ToolboxCategory("Custom");
             // Create Toolbox items.
             ToolboxItemWrapper tool1 =
                 new ToolboxItemWrapper("System.Activities.Statements.Assign",
@@ -75,15 +77,21 @@ namespace WPFWorkflowDesigner
                 typeof(Sequence).Assembly.FullName, null, "Sequence");
 
             ToolboxItemWrapper tool3 = new ToolboxItemWrapper("System.Activities.Statements.WriteLine",
-                typeof(Assign).Assembly.FullName, null, "WriteLine");
+                typeof(WriteLine).Assembly.FullName, null, "WriteLine");
+
+            ToolboxItemWrapper tool4 = new ToolboxItemWrapper("ConDep.activities.CopyFileActivity",
+                typeof(CopyFileActivity).Assembly.FullName, null, "CopyFile");
+
 
             // Add the Toolbox items to the category.
             category.Add(tool1);
             category.Add(tool2);
             category.Add(tool3);
+            category2.Add(tool4);
 
             // Add the category to the ToolBox control.
             ctrl.Categories.Add(category);
+            ctrl.Categories.Add(category2);
             return ctrl;
         }
 
@@ -91,13 +99,20 @@ namespace WPFWorkflowDesigner
         {
             //Create an instance of WorkflowDesigner class.
             this.wd = new WorkflowDesigner();
-
+            
             //Place the designer canvas in the middle column of the grid.
             Grid.SetColumn(this.wd.View, 1);
 
             //Load a new Sequence as default.
             this.wd.Load(new Sequence());
 
+            var designerView = wd.Context.Services.GetService<DesignerView>();
+            designerView.WorkflowShellBarItemVisibility = 
+                ShellBarItemVisibility.Imports |
+                ShellBarItemVisibility.MiniMap |
+                ShellBarItemVisibility.Variables |
+                ShellBarItemVisibility.Arguments | 
+                ShellBarItemVisibility.Zoom;
             //Add the designer canvas to the grid.
             WorkflowDesignerGrid.Children.Add(this.wd.View);
         }
