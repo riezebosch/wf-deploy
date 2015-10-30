@@ -17,6 +17,8 @@ namespace ConDep.implementation.Persistence
 
         public DbSet<Workflow> Workflows { get; set; }
 
+        public DbSet<WorkflowRun> WorkflowRuns { get; set; }
+
         public DbSet<Track> Tracks { get; set; }
     }
 

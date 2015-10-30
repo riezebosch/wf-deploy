@@ -11,5 +11,7 @@ namespace ConDep.implementation.Persistence
     {
         [Key]
         public int TrackId { get; set; }
+
+        public int WorkflowRunId { get; set; }
     }
 }
