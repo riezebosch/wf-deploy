@@ -57,6 +57,27 @@ namespace ConDep.implementation.Managers
             return tracker.Records;
         }
 
+        public IList<string> GetArgumentList(int id)
+        {
+            List<string> argumentList = new List<string>();
+            string fileLocation = null;
+            using (var context = new WorkflowContext())
+            {
+                fileLocation = context.Workflows.First(c => c.Id == id).FileLocation; // Hier kan een NullReferenceException optreden
+
+                string xamlData = ReadXamlFile(fileLocation);
+                var activity = ActivityXamlServices.Load(new StringReader(xamlData)) as DynamicActivity;
+                var properties = activity.Properties.ToList();
+
+                foreach (var item in properties)
+                {
+                    argumentList.Add(item.Name);
+                }
+            }
+
+            return argumentList;
+        }
+
         private string ReadXamlFile(string fileLocation)
         {
             if (File.Exists(fileLocation))

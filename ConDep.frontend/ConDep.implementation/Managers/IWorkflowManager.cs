@@ -13,5 +13,6 @@ namespace ConDep.implementation.Managers
         void AddWorkflow(Workflow workflow);
         IEnumerable<Workflow> RecieveWorkflows();
         IList<TrackingRecord> StartWorkflow(int id);
+        IList<string> GetArgumentList(int id);
     }
 }

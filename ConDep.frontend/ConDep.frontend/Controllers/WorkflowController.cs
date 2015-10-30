@@ -1,8 +1,6 @@
 ﻿using ConDep.implementation.Managers;
-using ConDep.implementation.Model;
 ﻿using ConDep.frontend.Models;
 using ConDep.implementation.Persistence;
-using ConDep.implementation.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,19 +29,44 @@ namespace ConDep.frontend.Controllers
 
         #endregion
 
+        public ActionResult Detail(int id)
+        {
+            var sw = new StartWorkflowModel();
+            sw.StartingParams = WorkflowManager.GetArgumentList(id);
+            sw.Id = id;            
+
+            return View(sw);
+        }
+
+        [HttpPost]
         public ActionResult Start(int id)
         {
-            try
-            {
-                var records = WorkflowManager.StartWorkflow(id);
-            }
-            catch(Exception ex)
-            {
-                ModelState.AddModelError("error", ex);
-            }
+            var paramToStart = Request.Params;
+            var paramList = WorkflowManager.GetArgumentList(id);
 
-            return View(ModelState);
+            Dictionary<string, object> wfParams = new Dictionary<string, object>();
+            foreach (var item in paramList)
+            {
+                wfParams.Add(item, paramToStart[item]);
+            }
+            WorkflowManager.StartWorkflow();
+
+            return View();
         }
+
+        //public ActionResult Start(int id)
+        //{
+        //    try
+        //    {
+        //        var records = WorkflowManager.StartWorkflow(id);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        ModelState.AddModelError("error", ex);
+        //    }
+
+        //    return View(ModelState);
+        //}
 
         public ActionResult Overview()
         {

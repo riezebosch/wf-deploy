@@ -1,0 +1,18 @@
+﻿@model ConDep.frontend.Models.StartWorkflowModel
+
+@{
+    ViewBag.Title = "Workflow starten";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (@Html.BeginForm("Start", "Workflow", new { id = Model.Id }, FormMethod.Post, null))
+{
+    foreach (var item in Model.StartingParams)
+    {
+        @Html.Label(item as string)
+        <input type="text" name="@item" id="@item"/>
+        <hr />
+    }
+
+    <input type="submit" value="Starten" />
+}

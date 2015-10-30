@@ -134,6 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\OverviewModel.cs" />
+    <Compile Include="Models\StartWorkflowModel.cs" />
     <Compile Include="Models\WorkflowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <Content Include="Views\Workflow\Start.cshtml" />
     <Content Include="Views\Workflow\Upload.cshtml" />
     <Content Include="Views\Workflow\Overview.cshtml" />
+    <Content Include="Views\Workflow\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
