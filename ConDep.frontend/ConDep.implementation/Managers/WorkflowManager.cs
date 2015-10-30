@@ -49,6 +49,10 @@ namespace ConDep.implementation.Managers
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
             // Handle the desired lifecycle events.
             wfApp.Completed = (e) => syncEvent.Set();
+            wfApp.OnUnhandledException += (WorkflowApplicationUnhandledExceptionEventArgs e) => 
+            {
+                throw e.UnhandledException;
+            };
 
             // Start the workflow.
             wfApp.Run();
