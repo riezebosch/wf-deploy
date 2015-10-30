@@ -46,6 +46,7 @@
     <Compile Include="CustomTrackingParticipant.cs" />
     <Compile Include="Managers\IWorkflowManager.cs" />
     <Compile Include="Managers\WorkflowManager.cs" />
+    <Compile Include="Model\TraceRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
 ﻿using ConDep.implementation.Managers;
+using ConDep.implementation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace ConDep.frontend.Controllers
         {
             try
             {
-                WorkflowManager.StartWorkflow("sample");
+                var records = WorkflowManager.StartWorkflow("sample");
             }
             catch(Exception ex)
             {
