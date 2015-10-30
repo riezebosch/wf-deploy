@@ -130,10 +130,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\WorkflowController.cs" />
+    <Compile Include="Controllers\WorkflowRunController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HistoryModel.cs" />
     <Compile Include="Models\OverviewModel.cs" />
+    <Compile Include="Models\TracksViewModel.cs" />
+    <Compile Include="Models\TrackViewModel.cs" />
+    <Compile Include="Models\WorkflowRunViewModel.cs" />
     <Compile Include="Models\WorkflowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,6 +177,8 @@
     <Content Include="Views\Workflow\Start.cshtml" />
     <Content Include="Views\Workflow\Upload.cshtml" />
     <Content Include="Views\Workflow\Overview.cshtml" />
+    <Content Include="Views\Workflow\History.cshtml" />
+    <Content Include="Views\WorkflowRun\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

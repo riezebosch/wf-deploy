@@ -87,5 +87,24 @@ namespace ConDep.frontend.Controllers
 
             return RedirectToAction("Overview", "Workflow");
         }
+
+        public ActionResult History(int id)
+        {
+            var workflowRuns = WorkflowManager.Recieveruns(id);
+            HistoryModel model = new HistoryModel()
+            {
+                WorkflowRuns = new List<WorkflowRunViewModel>()
+            };
+            foreach (var workflowRun in workflowRuns)
+            {
+                model.WorkflowRuns.Add(new WorkflowRunViewModel()
+                {
+                    WorkflowId = workflowRun.WorkflowId,
+                    WorkflowRunId = workflowRun.WorkflowRunId,
+                    RunTime = workflowRun.StartTime
+                });
+            }
+            return View(model);
+        }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model ConDep.frontend.Models.TracksViewModel
+
+<h2>Tracking</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Tracks)
+    {
+        <tr>
+            <td>
+                @item.ActivityName
+            </td>
+            <td>
+                @item.State
+            </td>
+            <td>
+                @item.EventTime
+            </td>
+        </tr>
+    }
+
+</table>

@@ -50,11 +50,37 @@ namespace ConDep.implementation.Managers
             wfApp.Run();
             syncEvent.WaitOne();
 
-            //using (WorkflowContext context = new WorkflowContext())
-            //{
-            //    context.Tracks.Add();
-            //}
+            var tracks = MapTracks(tracker.Records, (t) =>
+            {
+                t.WorkflowRunId = workflowRunId;
+                return t;
+            });
+
+            using (WorkflowContext context = new WorkflowContext())
+            {
+                context.Tracks.AddRange(tracks);
+                context.SaveChanges();
+            }
             return tracker.Records;
+        }
+
+        private IEnumerable<Track> MapTracks(IList<TrackingRecord> trackingRecords, Func<Track, Track> afterMap)
+        {
+            var tracks = new List<Track>();
+
+            foreach(var trackingRecord in trackingRecords.Where(c => c.GetType() == typeof(ActivityStateRecord)))
+            {
+                var record = trackingRecord as ActivityStateRecord;
+                var track = new Track()
+                {
+                    State = record.State,
+                    ActivityName = record.Activity.Name,
+                    EventTime = record.EventTime
+                };
+                track = afterMap(track);
+                tracks.Add(track);
+            }
+            return tracks;
         }
 
         private string ReadXamlFile(string fileLocation)
@@ -81,6 +107,14 @@ namespace ConDep.implementation.Managers
             using(var context = new WorkflowContext())
             {
                 return context.Workflows.ToList();
+            }
+        }
+
+        public IEnumerable<WorkflowRun> Recieveruns(int id)
+        {
+            using (var context = new WorkflowContext())
+            {
+                return context.WorkflowRuns.Where(c => c.WorkflowId == id).ToList();
             }
         }
 

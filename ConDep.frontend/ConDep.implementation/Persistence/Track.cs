@@ -13,5 +13,9 @@ namespace ConDep.implementation.Persistence
         public int TrackId { get; set; }
 
         public int WorkflowRunId { get; set; }
+
+        public string ActivityName { get; set; }
+        public string State { get; set; }
+        public DateTime EventTime { get; set; }
     }
 }
