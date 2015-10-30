@@ -19,6 +19,7 @@ using System.Activities.Presentation.Metadata;
 using System.Activities.Presentation.Toolbox;
 using System.Activities.Statements;
 using System.ComponentModel;
+using Microsoft.Win32;
 
 namespace WPFWorkflowDesigner
 {
@@ -33,11 +34,57 @@ namespace WPFWorkflowDesigner
         {
             InitializeComponent();
             // Register the metadata
-            RegisterMetadata();
+            this.RegisterMetadata();
 
 
             // Add the WFF Designer
-            AddDesigner();
+            this.AddDesigner();
+
+            this.AddToolBox();
+
+            this.AddPropertyInspector();
+        }
+
+        private void AddPropertyInspector()
+        {
+            Grid.SetColumn(wd.PropertyInspectorView, 2);
+            WorkflowDesignerGrid.Children.Add(wd.PropertyInspectorView);
+        }
+
+        private void AddToolBox()
+        {
+            ToolboxControl tc = GetToolboxControl();
+            Grid.SetColumn(tc, 0);
+            WorkflowDesignerGrid.Children.Add(tc);
+        }
+
+        private ToolboxControl GetToolboxControl()
+        {
+            // Create the ToolBoxControl.
+            ToolboxControl ctrl = new ToolboxControl();
+
+            // Create a category.
+            ToolboxCategory category = new ToolboxCategory("Available");
+
+            // Create Toolbox items.
+            ToolboxItemWrapper tool1 =
+                new ToolboxItemWrapper("System.Activities.Statements.Assign",
+                typeof(Assign).Assembly.FullName, null, "Assign");
+
+            ToolboxItemWrapper tool2 = new ToolboxItemWrapper("System.Activities.Statements.Sequence",
+                typeof(Sequence).Assembly.FullName, null, "Sequence");
+
+            ToolboxItemWrapper tool3 = new ToolboxItemWrapper("System.Activities.Statements.WriteLine",
+                typeof(Assign).Assembly.FullName, null, "WriteLine");
+
+            // Add the Toolbox items to the category.
+            category.Add(tool1);
+            category.Add(tool2);
+            category.Add(tool3);
+
+            // Add the category to the ToolBox control.
+            ctrl.Categories.Add(category);
+            return ctrl;
         }
 
         private void AddDesigner()
@@ -59,6 +106,20 @@ namespace WPFWorkflowDesigner
         {
             DesignerMetadata dm = new DesignerMetadata();
             dm.Register();
+        }
+
+        private void ExportXAML(string fileName)
+        {
+            wd.Save(fileName);
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                ExportXAML(saveFileDialog.FileName);
+            }
         }
     }
 }
