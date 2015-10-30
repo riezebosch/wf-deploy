@@ -1,0 +1,25 @@
+﻿@model ConDep.frontend.Models.OverviewModel
+
+@{
+    ViewBag.Title = "Overview";
+}
+
+<h2>Overview</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Files) {
+    <tr>
+        <td>
+            @item
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,6 +1,8 @@
-﻿using ConDep.implementation.Managers;
+﻿using ConDep.frontend.Models;
+using ConDep.implementation.Managers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -30,7 +32,7 @@ namespace ConDep.frontend.Controllers
         {
             try
             {
-                WorkflowManager.StartWorkflow("sample");
+                WorkflowManager.StartWorkflow("sample.xaml");
             }
             catch(Exception ex)
             {
@@ -38,6 +40,31 @@ namespace ConDep.frontend.Controllers
             }
 
             return View(ModelState);
+        }
+
+        public ActionResult Overview()
+        {
+            OverviewModel model = new OverviewModel();
+            model.Files = Directory.GetFiles(@"C:\XAML\");
+            return View(model);
+        }
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if(file != null && file.ContentLength > 0)
+            {
+                string fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(@"C:/XAML", fileName);
+                file.SaveAs(path);
+            }
+
+            return RedirectToAction("Overview", "Workflow");
         }
     }
 }
