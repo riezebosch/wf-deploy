@@ -1,3 +1,5 @@
+﻿using ConDep.implementation.Managers;
+using ConDep.implementation.Model;
 ﻿using ConDep.frontend.Models;
 using ConDep.implementation.Managers;
 using System;
@@ -32,7 +34,7 @@ namespace ConDep.frontend.Controllers
         {
             try
             {
-                WorkflowManager.StartWorkflow("sample.xaml");
+                var records = WorkflowManager.StartWorkflow("sample.xaml");
             }
             catch(Exception ex)
             {

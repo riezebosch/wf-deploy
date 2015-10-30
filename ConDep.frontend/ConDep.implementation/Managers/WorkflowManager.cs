@@ -1,6 +1,7 @@
 ﻿using ConDep.implementation.Persistence;
 using System;
 using System.Activities;
+using System.Activities.Tracking;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace ConDep.implementation.Managers
 {
     public class WorkflowManager : IWorkflowManager
     {
-        public void StartWorkflow(string name)
+        public IList<TrackingRecord> StartWorkflow(string name)
         {
             var xamlData = ReadXamlFile(name);
 
@@ -38,6 +39,7 @@ namespace ConDep.implementation.Managers
             //{
             //    context.Tracks.Add();
             //}
+            return tracker.Records;
         }
 
         private string ReadXamlFile(string name)

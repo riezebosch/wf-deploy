@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Tracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace ConDep.implementation.Managers
 {
     public interface IWorkflowManager
     {
-        void StartWorkflow(string name);
+        IList<TrackingRecord> StartWorkflow(string name);
     }
 }
