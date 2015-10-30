@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\TracingExtension.cs" />
     <Compile Include="Managers\IWorkflowManager.cs" />
     <Compile Include="Managers\WorkflowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
