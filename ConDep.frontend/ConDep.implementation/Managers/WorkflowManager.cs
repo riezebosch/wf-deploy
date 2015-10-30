@@ -18,9 +18,18 @@ namespace ConDep.implementation.Managers
         public IList<TrackingRecord> StartWorkflow(int id)
         {
             string fileLocation = null;
+            int workflowRunId = 0;
             using (var context = new WorkflowContext())
             {
-                fileLocation = context.Workflows.First(c => c.Id == id).FileLocation;
+                fileLocation = context.Workflows.First(c => c.Id == id).FileLocation; // Hier kan een NullReferenceException optreden
+                var workflowRun = new WorkflowRun()
+                {
+                    WorkflowId = id,
+                    StartTime = DateTime.Now
+                };
+                context.WorkflowRuns.Add(workflowRun);
+                context.SaveChanges();
+                workflowRunId = workflowRun.WorkflowRunId;
             }
 
             var xamlData = ReadXamlFile(fileLocation);
