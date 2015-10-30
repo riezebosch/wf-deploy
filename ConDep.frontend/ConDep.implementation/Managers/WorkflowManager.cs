@@ -41,7 +41,7 @@ namespace ConDep.implementation.Managers
             var xamlData = ReadXamlFile(fileLocation);
 
             var tracker = new CustomTrackingParticipant();
-            var wf = ActivityXamlServices.Load(new StringReader(xamlData));
+            var wf = ActivityXamlServices.Load(new StringReader(xamlData), new ActivityXamlServicesSettings {  CompileExpressions = true });
 
             AutoResetEvent syncEvent = new AutoResetEvent(false);
             WorkflowApplication wfApp = new WorkflowApplication(wf, wfParams);
