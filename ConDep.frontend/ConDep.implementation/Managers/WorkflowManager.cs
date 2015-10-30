@@ -40,7 +40,7 @@ namespace ConDep.implementation.Managers
         private string ReadXamlFile(string name)
         {
             var pickupDir = ConfigurationManager.AppSettings["XAMLPickupDirectory"];
-            var fileLocation = Path.Combine(pickupDir, name + ".xaml");
+            var fileLocation = Path.Combine(pickupDir, name);
             if (File.Exists(fileLocation))
             {
                 return File.ReadAllText(fileLocation);

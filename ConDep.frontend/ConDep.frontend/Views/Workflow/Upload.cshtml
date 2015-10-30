@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Upload een XAML file";
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Upload", "Workflow", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <p>Selecteer een bestand:</p>
+    <input type="file" name="file" />
+    <input type="submit" value="Uploaden" />
+}
