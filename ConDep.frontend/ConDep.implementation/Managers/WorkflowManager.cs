@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace ConDep.implementation.Managers
             Dictionary<string, object> wfParams = new Dictionary<string, object>();
 
             AutoResetEvent syncEvent = new AutoResetEvent(false);
-
+            
             WorkflowApplication wfApp = new WorkflowApplication(wf);
             wfApp.Extensions.Add(new TracingExtension());
             // Handle the desired lifecycle events.
@@ -34,18 +33,19 @@ namespace ConDep.implementation.Managers
 
             // Start the workflow.
             wfApp.Run();
-
             syncEvent.WaitOne();
         }
 
-        private Activity ReadActivityFromDll(string name)
+        private string ReadXamlFile(string name)
         {
             var pickupDir = ConfigurationManager.AppSettings["XAMLPickupDirectory"];
-            var fileLocation = Path.Combine(pickupDir, name);
+            var fileLocation = Path.Combine(pickupDir, name + ".xaml");
+            if (File.Exists(fileLocation))
+            {
+                return File.ReadAllText(fileLocation);
+            }
 
-            var assembly = Assembly.LoadFrom(fileLocation);
-            
-            
+            throw new FileNotFoundException();
         }
     }
 }

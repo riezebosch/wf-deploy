@@ -1,6 +1,5 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="ConDep.activities.Activity1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="ConDep.activities.Activity1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="ConDep.activities.Activity1_1"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
- xmlns:local="clr-namespace:ConDep.activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
@@ -34,12 +33,11 @@
       <AssemblyReference>ConDep.activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <local:TracingActivity Message="Een testbericht." sap2010:WorkflowViewState.IdRef="TracingActivity_1" sads:DebugSymbol.Symbol="d19DOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xjb25kZXBcY29uZGVwXENvbkRlcC5mcm9udGVuZFxDb25EZXAuYWN0aXZpdGllc1xBY3Rpdml0eTEueGFtbAIlAyWeAQIBASUiJTQCAQI=" />
-  <sap2010:WorkflowViewState.IdRef>ConDep.activities.Activity1_1</sap2010:WorkflowViewState.IdRef>
+  <WriteLine Text="Testbericht" sap2010:WorkflowViewState.IdRef="WriteLine_1" sads:DebugSymbol.Symbol="d19DOlxVc2Vyc1xBZG1pbmlzdHJhdG9yXERvY3VtZW50c1xjb25kZXBcY29uZGVwXENvbkRlcC5mcm9udGVuZFxDb25EZXAuYWN0aXZpdGllc1xBY3Rpdml0eTEueGFtbAIkAySEAQIBASQTJCACAQI=" />
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="TracingActivity_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="ConDep.activities.Activity1_1" sap:VirtualizedContainerService.HintSize="240,102" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="211,62" />
+      <sap2010:ViewStateData Id="ConDep.activities.Activity1_1" sap:VirtualizedContainerService.HintSize="251,142" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

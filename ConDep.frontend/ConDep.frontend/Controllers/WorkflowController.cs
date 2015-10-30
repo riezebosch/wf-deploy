@@ -30,7 +30,7 @@ namespace ConDep.frontend.Controllers
         {
             try
             {
-                WorkflowManager.StartWorkflow("");
+                WorkflowManager.StartWorkflow("sample");
             }
             catch(Exception ex)
             {
