@@ -44,7 +44,7 @@ namespace ConDep.implementation.Managers
             var wf = ActivityXamlServices.Load(new StringReader(xamlData));
 
             AutoResetEvent syncEvent = new AutoResetEvent(false);
-            WorkflowApplication wfApp = new WorkflowApplication(wf);
+            WorkflowApplication wfApp = new WorkflowApplication(wf, wfParams);
             wfApp.Extensions.Add(tracker);
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
             // Handle the desired lifecycle events.
@@ -78,6 +78,7 @@ namespace ConDep.implementation.Managers
 
                 string xamlData = ReadXamlFile(fileLocation);
                 var activity = ActivityXamlServices.Load(new StringReader(xamlData)) as DynamicActivity;
+                
                 var properties = activity.Properties.ToList();
 
                 foreach (var item in properties)
