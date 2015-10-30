@@ -10,9 +10,8 @@ namespace ConDep.implementation.Managers
 {
     public interface IWorkflowManager
     {
-        void StartWorkflow(int id);
         void AddWorkflow(Workflow workflow);
         IEnumerable<Workflow> RecieveWorkflows();
-        IList<TrackingRecord> StartWorkflow(string name);
+        IList<TrackingRecord> StartWorkflow(int id);
     }
 }

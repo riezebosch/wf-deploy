@@ -27,10 +27,10 @@ namespace ConDep.implementation.Managers
 
             var tracker = new CustomTrackingParticipant();
             var wf = ActivityXamlServices.Load(new StringReader(xamlData));
-            
+
             Dictionary<string, object> wfParams = new Dictionary<string, object>();
 
-            AutoResetEvent syncEvent = new AutoResetEvent(false);            
+            AutoResetEvent syncEvent = new AutoResetEvent(false);
             WorkflowApplication wfApp = new WorkflowApplication(wf);
             wfApp.Extensions.Add(tracker);
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
@@ -74,5 +74,6 @@ namespace ConDep.implementation.Managers
                 return context.Workflows.ToList();
             }
         }
+
     }
 }
