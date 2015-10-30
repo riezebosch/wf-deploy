@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConDep.implementation.Persistence;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace ConDep.implementation.Managers
 {
     public interface IWorkflowManager
     {
-        void StartWorkflow(string name);
+        void StartWorkflow(int id);
+        void AddWorkflow(Workflow workflow);
+        IEnumerable<Workflow> RecieveWorkflows();
     }
 }

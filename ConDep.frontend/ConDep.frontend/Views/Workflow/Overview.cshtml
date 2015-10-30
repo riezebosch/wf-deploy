@@ -12,12 +12,17 @@
 <table class="table">
     <tr>
         <th></th>
+        <th></th>
+        <th></th>
     </tr>
-
-@foreach (var item in Model.Files) {
+@foreach (var item in Model.Workflows)
+{
     <tr>
         <td>
-            @item
+            @item.Filename
+        </td>
+        <td>
+            @Html.ActionLink("Start", "Start", new { Id = item.Id })
         </td>
     </tr>
 }

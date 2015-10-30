@@ -7,5 +7,6 @@ namespace ConDep.implementation.Persistence
         [Key]
         public int Id { get; set; }
         public string FileLocation { get; set; }
+        public string Filename { get; set; }
     }
 }

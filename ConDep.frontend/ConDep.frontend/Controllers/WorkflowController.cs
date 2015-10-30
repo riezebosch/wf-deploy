@@ -1,5 +1,6 @@
 ﻿using ConDep.frontend.Models;
 using ConDep.implementation.Managers;
+using ConDep.implementation.Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,11 +29,11 @@ namespace ConDep.frontend.Controllers
 
         #endregion
 
-        public ActionResult Start()
+        public ActionResult Start(int id)
         {
             try
             {
-                WorkflowManager.StartWorkflow("sample.xaml");
+                WorkflowManager.StartWorkflow(id);
             }
             catch(Exception ex)
             {
@@ -44,8 +45,19 @@ namespace ConDep.frontend.Controllers
 
         public ActionResult Overview()
         {
-            OverviewModel model = new OverviewModel();
-            model.Files = Directory.GetFiles(@"C:\XAML\");
+            var workflows = WorkflowManager.RecieveWorkflows();
+            OverviewModel model = new OverviewModel()
+            {
+                Workflows = new List<WorkflowViewModel>()
+            };
+            foreach(var workflow in workflows)
+            {
+                model.Workflows.Add(new WorkflowViewModel()
+                {
+                    Id = workflow.Id,
+                    Filename = workflow.Filename
+                });
+            }
             return View(model);
         }
 
@@ -62,6 +74,13 @@ namespace ConDep.frontend.Controllers
                 string fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(@"C:/XAML", fileName);
                 file.SaveAs(path);
+
+                Workflow workflow = new Workflow()
+                {
+                    FileLocation = path,
+                    Filename = fileName
+                };
+                WorkflowManager.AddWorkflow(workflow);
             }
 
             return RedirectToAction("Overview", "Workflow");

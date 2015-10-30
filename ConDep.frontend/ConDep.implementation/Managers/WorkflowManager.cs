@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConDep.implementation.Persistence;
+using System;
 using System.Activities;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
@@ -13,9 +14,15 @@ namespace ConDep.implementation.Managers
 {
     public class WorkflowManager : IWorkflowManager
     {
-        public void StartWorkflow(string name)
+        public void StartWorkflow(int id)
         {
-            var xamlData = ReadXamlFile(name);
+            string fileLocation = null;
+            using (var context = new WorkflowContext())
+            {
+                fileLocation = context.Workflows.First(c => c.Id == id).FileLocation;
+            }
+
+            var xamlData = ReadXamlFile(fileLocation);
 
             var tracker = new CustomTrackingParticipant();
             var wf = ActivityXamlServices.Load(new StringReader(xamlData));
@@ -35,16 +42,31 @@ namespace ConDep.implementation.Managers
             syncEvent.WaitOne();
         }
 
-        private string ReadXamlFile(string name)
+        private string ReadXamlFile(string fileLocation)
         {
-            var pickupDir = ConfigurationManager.AppSettings["XAMLPickupDirectory"];
-            var fileLocation = Path.Combine(pickupDir, name);
             if (File.Exists(fileLocation))
             {
                 return File.ReadAllText(fileLocation);
             }
 
             throw new FileNotFoundException();
+        }
+
+        public void AddWorkflow(Workflow workflow)
+        {
+            using(var context = new WorkflowContext())
+            {
+                context.Workflows.Add(workflow);
+                context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Workflow> RecieveWorkflows()
+        {
+            using(var context = new WorkflowContext())
+            {
+                return context.Workflows.ToList();
+            }
         }
     }
 }
