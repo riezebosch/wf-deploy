@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConDep.implementation.Persistence;
+using System;
 using System.Activities;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
@@ -22,8 +23,7 @@ namespace ConDep.implementation.Managers
             
             Dictionary<string, object> wfParams = new Dictionary<string, object>();
 
-            AutoResetEvent syncEvent = new AutoResetEvent(false);
-            
+            AutoResetEvent syncEvent = new AutoResetEvent(false);            
             WorkflowApplication wfApp = new WorkflowApplication(wf);
             wfApp.Extensions.Add(tracker);
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
@@ -33,6 +33,11 @@ namespace ConDep.implementation.Managers
             // Start the workflow.
             wfApp.Run();
             syncEvent.WaitOne();
+
+            //using (WorkflowContext context = new WorkflowContext())
+            //{
+            //    context.Tracks.Add();
+            //}
         }
 
         private string ReadXamlFile(string name)
