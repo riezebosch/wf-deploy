@@ -16,7 +16,7 @@ namespace ConDep.frontend
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Workflow", action = "Start", id = UrlParameter.Optional }
+                defaults: new { controller = "Workflow", action = "Overview", id = UrlParameter.Optional }
             );
         }
     }
