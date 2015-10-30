@@ -1,5 +1,4 @@
-﻿using ConDep.implementation.Extensions;
-using System;
+﻿using System;
 using System.Activities;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
@@ -18,18 +17,18 @@ namespace ConDep.implementation.Managers
         {
             var xamlData = ReadXamlFile(name);
 
-            DynamicActivity wf = ActivityXamlServices.Load(new StringReader(xamlData)) as DynamicActivity;
+            var tracker = new CustomTrackingParticipant();
+            var wf = ActivityXamlServices.Load(new StringReader(xamlData));
+            
             Dictionary<string, object> wfParams = new Dictionary<string, object>();
 
             AutoResetEvent syncEvent = new AutoResetEvent(false);
             
             WorkflowApplication wfApp = new WorkflowApplication(wf);
-            wfApp.Extensions.Add(new TracingExtension());
+            wfApp.Extensions.Add(tracker);
+            wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
             // Handle the desired lifecycle events.
-            wfApp.Completed = delegate (WorkflowApplicationCompletedEventArgs e)
-            {
-                syncEvent.Set();
-            };
+            wfApp.Completed = (e) => syncEvent.Set();
 
             // Start the workflow.
             wfApp.Run();
