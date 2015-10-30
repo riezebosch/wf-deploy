@@ -48,16 +48,39 @@ namespace ConDep.implementation.Managers
             wfApp.Extensions.Add(tracker);
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
             // Handle the desired lifecycle events.
+            Exception exception = null;
+
             wfApp.Completed = (e) => syncEvent.Set();
-            wfApp.OnUnhandledException += (WorkflowApplicationUnhandledExceptionEventArgs e) => 
+            wfApp.OnUnhandledException += (WorkflowApplicationUnhandledExceptionEventArgs e) =>
             {
-                throw e.UnhandledException;
+                using (WorkflowContext context = new WorkflowContext())
+                {
+                    context.Tracks.Add(new Track()
+                    {
+                        ActivityName = e.UnhandledException.ToString(),
+                        EventTime = DateTime.Now.AddHours(-1),
+                        State = "Faulted",
+                        WorkflowRunId = workflowRunId,
+                    });
+                    context.SaveChanges();
+                }
+                LogTracks(workflowRunId, tracker);
+
+                return UnhandledExceptionAction.Terminate;
             };
+
 
             // Start the workflow.
             wfApp.Run();
             syncEvent.WaitOne();
 
+            LogTracks(workflowRunId, tracker);
+
+            return tracker.Records;
+        }
+
+        private void LogTracks(int workflowRunId, CustomTrackingParticipant tracker)
+        {
             var tracks = MapTracks(tracker.Records, (t) =>
             {
                 t.WorkflowRunId = workflowRunId;
@@ -69,7 +92,6 @@ namespace ConDep.implementation.Managers
                 context.Tracks.AddRange(tracks);
                 context.SaveChanges();
             }
-            return tracker.Records;
         }
 
         public IList<string> GetArgumentList(int id)
@@ -100,6 +122,7 @@ namespace ConDep.implementation.Managers
             foreach(var trackingRecord in trackingRecords.Where(c => c.GetType() == typeof(ActivityStateRecord)))
             {
                 var record = trackingRecord as ActivityStateRecord;
+
                 var track = new Track()
                 {
                     State = record.State,

@@ -13,7 +13,7 @@ namespace ConDep.implementation.Managers
         {
             using (var context = new WorkflowContext())
             {
-                return context.Tracks.Where(c => c.WorkflowRunId == id).ToList();
+                return context.Tracks.Where(c => c.WorkflowRunId == id).OrderBy(c => c.EventTime).ToList();
             }
         }
     }
