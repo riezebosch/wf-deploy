@@ -1,6 +1,7 @@
 ﻿using ConDep.implementation.Persistence;
 using System;
 using System.Activities;
+using System.Activities.Tracking;
 using System.Activities.XamlIntegration;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace ConDep.implementation.Managers
 {
     public class WorkflowManager : IWorkflowManager
     {
-        public void StartWorkflow(int id)
+        public IList<TrackingRecord> StartWorkflow(int id)
         {
             string fileLocation = null;
             using (var context = new WorkflowContext())
@@ -29,8 +30,7 @@ namespace ConDep.implementation.Managers
             
             Dictionary<string, object> wfParams = new Dictionary<string, object>();
 
-            AutoResetEvent syncEvent = new AutoResetEvent(false);
-            
+            AutoResetEvent syncEvent = new AutoResetEvent(false);            
             WorkflowApplication wfApp = new WorkflowApplication(wf);
             wfApp.Extensions.Add(tracker);
             wfApp.Extensions.Add<TextWriter>(() => new StreamWriter(@"C:/XAML/log.txt"));
@@ -40,6 +40,12 @@ namespace ConDep.implementation.Managers
             // Start the workflow.
             wfApp.Run();
             syncEvent.WaitOne();
+
+            //using (WorkflowContext context = new WorkflowContext())
+            //{
+            //    context.Tracks.Add();
+            //}
+            return tracker.Records;
         }
 
         private string ReadXamlFile(string fileLocation)

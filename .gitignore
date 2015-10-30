@@ -239,3 +239,4 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+ConDep.frontend/ConDep.frontend/MyTraceLog.txt

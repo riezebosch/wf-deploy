@@ -55,9 +55,11 @@
     <Compile Include="CustomTrackingParticipant.cs" />
     <Compile Include="Managers\IWorkflowManager.cs" />
     <Compile Include="Managers\WorkflowManager.cs" />
+    <Compile Include="Model\TraceRecord.cs" />
     <Compile Include="Persistence\Track.cs" />
     <Compile Include="Persistence\Workflow.cs" />
     <Compile Include="Persistence\WorkflowContext.cs" />
+    <Compile Include="Persistence\WorkflowRun.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

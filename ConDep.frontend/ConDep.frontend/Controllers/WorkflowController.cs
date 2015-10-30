@@ -1,6 +1,8 @@
+﻿using ConDep.implementation.Managers;
+using ConDep.implementation.Model;
 ﻿using ConDep.frontend.Models;
-using ConDep.implementation.Managers;
 using ConDep.implementation.Persistence;
+using ConDep.implementation.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +35,7 @@ namespace ConDep.frontend.Controllers
         {
             try
             {
-                WorkflowManager.StartWorkflow(id);
+                var records = WorkflowManager.StartWorkflow(id);
             }
             catch(Exception ex)
             {
